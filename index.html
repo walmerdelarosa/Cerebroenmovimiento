@@ -11,12 +11,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 450px; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+            /* Permite scroll horizontal si es necesario */
+            overflow-x: auto;
+        }
         @media (min-width: 768px) { .chart-container { height: 400px; } }
         .tab-active { border-color: #10b981; color: #10b981; }
         .tab-inactive { border-color: transparent; color: #6b7280; }
         .card-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
         .card-active .card-content { max-height: 200px; }
+        /* Ajustes responsivos específicos para gráficas y fuentes */
+        @media (max-width: 600px) {
+            .chart-container {
+                height: 250px;
+                min-width: 320px;
+            }
+            canvas {
+                max-width: 100vw !important;
+                height: 220px !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -24,8 +45,8 @@
    <header class="bg-white shadow-sm sticky top-0 z-50">
   <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
     <div class="flex items-center space-x-4">
-      <img src="assets/logo_grupo.png" alt="Logo Grupo" class="h-10"> <!-- Logo grupo -->
-      <img src="assets/logo_universidad.png" alt="Logo Universidad" class="h-10"> <!-- Logo universidad -->
+      <img src="assets/logo_grupo.png" alt="Logo Grupo" class="h-10">
+      <img src="assets/logo_universidad.png" alt="Logo Universidad" class="h-10">
       <h1 class="font-bold text-lg text-emerald-600">Cerebro en Movimiento</h1>
             <div class="hidden md:flex space-x-6 text-sm font-semibold">
                 <a href="#intro" class="text-slate-800 hover:text-emerald-600 transition">Inicio</a>
@@ -53,7 +74,7 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Mueve tu cuerpo, potencia tu mente.</h2>
                 <p class="text-lg text-slate-800 max-w-3xl mx-auto">
-                    Descubre cómo los ejercicios de fuerza y resistencia mejoran las funciones ejecutivas del cerebro, impulsando el rendimiento académico. Esta aplicación interactiva desglosa la evidencia y te da recomendaciones prácticas para tu vida diaria.
+                    Descubre cómo los ejercicios de fuerza y resistencia mejoran las funciones ejecutivas del cerebro, impulsando el rendimiento académico. Esta aplicación interactiva desglosa los mecanismos y beneficios clave respaldados por la ciencia.
                 </p>
             </div>
         </section>
@@ -62,7 +83,7 @@
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h3 class="text-3xl font-bold text-slate-800">¿Por Qué Funciona? Los Mecanismos Cerebrales</h3>
-                    <p class="mt-2 text-slate-800 max-w-2xl mx-auto">El ejercicio no solo fortalece los músculos, sino que transforma activamente la química y estructura de tu cerebro. Estos son los principales mecanismos implicados:</p>
+                    <p class="mt-2 text-slate-800 max-w-2xl mx-auto">El ejercicio no solo fortalece los músculos, sino que transforma activamente la química y estructura de tu cerebro. Estos son los mecanismos principales:</p>
                 </div>
                 <div id="mechanism-cards" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 </div>
@@ -73,12 +94,12 @@
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h3 class="text-3xl font-bold text-slate-800">Beneficios Directos en tus Funciones Ejecutivas</h3>
-                    <p class="mt-2 text-slate-800 max-w-3xl mx-auto">Las funciones ejecutivas son las habilidades mentales que nos permiten planificar, enfocarnos y realizar múltiples tareas. El ejercicio potencia estas capacidades.</p>
+                    <p class="mt-2 text-slate-800 max-w-3xl mx-auto">Las funciones ejecutivas son las habilidades mentales que nos permiten planificar, enfocarnos y realizar múltiples tareas. El ejercicio es un potente estimulante para estas capacidades.</p>
                 </div>
                 <div class="flex flex-col lg:flex-row items-center gap-8">
                     <div class="w-full lg:w-1/2 flex justify-center items-center">
-                        <div class="chart-container w-full h-80 bg-slate-100 rounded-xl flex justify-center items-center">
-                            <canvas id="benefitsChart" width="600" height="350"></canvas>
+                        <div class="chart-container w-full h-80 bg-slate-100 rounded-xl flex justify-center items-center" style="overflow-x:auto;">
+                            <canvas id="benefitsChart" width="600" height="350" style="max-width:100%;"></canvas>
                         </div>
                     </div>
                     <div class="w-full lg:w-1/2">
@@ -97,14 +118,14 @@
             <div class="container mx-auto px-6">
                  <div class="text-center mb-12">
                     <h3 class="text-3xl font-bold text-slate-800">Comparando Tipos de Ejercicio</h3>
-                    <p class="mt-2 text-slate-800 max-w-3xl mx-auto">Tanto el ejercicio aeróbico como el de fuerza aportan beneficios únicos. Aquí puedes comparar directamente cómo cada modalidad impacta la cognición y el rendimiento académico.</p>
+                    <p class="mt-2 text-slate-800 max-w-3xl mx-auto">Tanto el ejercicio aeróbico como el de fuerza aportan beneficios únicos. Aquí puedes comparar directamente cómo cada modalidad impacta el rendimiento académico y cognitivo.</p>
                 </div>
-                 <div class="bg-white p-8 rounded-xl shadow-md"><!-- MODIFICADO: bg-white en vez de bg-slate-900 -->
-                     <div class="chart-container w-full h-80 bg-white rounded-xl flex justify-center items-center"><!-- MODIFICADO: bg-white en vez de bg-slate-900 -->
-                        <canvas id="comparisonChart" width="600" height="350"></canvas>
+                 <div class="bg-white p-8 rounded-xl shadow-md">
+                     <div class="chart-container w-full h-80 bg-white rounded-xl flex justify-center items-center" style="overflow-x:auto;">
+                        <canvas id="comparisonChart" width="600" height="350" style="max-width:100%;"></canvas>
                     </div>
-                     <div class="text-center text-sm text-slate-700 mt-4"><!-- MODIFICADO: texto ahora oscuro sobre fondo claro -->
-                        <p>El gráfico muestra una estimación del impacto positivo relativo reportado en la literatura. El entrenamiento de fuerza, por ejemplo, ha demostrado ser particularmente efectivo para el rendimiento académico, mientras que el aeróbico mejora aspectos de comportamiento.</p>
+                     <div class="text-center text-sm text-slate-700 mt-4">
+                        <p>El gráfico muestra una estimación del impacto positivo relativo reportado en la literatura. El entrenamiento de fuerza, por ejemplo, ha demostrado ser particularmente efectivo en el rendimiento académico.</p>
                     </div>
                  </div>
             </div>
@@ -114,7 +135,7 @@
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h3 class="text-3xl font-bold text-slate-800">Recomendaciones Prácticas</h3>
-                    <p class="mt-2 text-slate-800 max-w-2xl mx-auto">¿Cuánto y cómo? Aquí tienes las guías basadas en la evidencia para optimizar los beneficios cognitivos. Selecciona tu grupo y descubre las mejores prácticas.</p>
+                    <p class="mt-2 text-slate-800 max-w-2xl mx-auto">¿Cuánto y cómo? Aquí tienes las guías basadas en la evidencia para optimizar los beneficios cognitivos. Selecciona tu grupo de edad:</p>
                 </div>
                 <div>
                     <div class="flex justify-center border-b-2 border-slate-200 mb-8">
@@ -130,7 +151,7 @@
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h3 class="text-3xl font-bold text-slate-800">Integración en el Entorno Academico</h3>
-                    <p class="mt-2 text-slate-800 max-w-2xl mx-auto">La escuela es el lugar ideal para aplicar estos conocimientos. Fomentar el movimiento durante la jornada escolar tiene un impacto directo en el aprendizaje y bienestar.</p>
+                    <p class="mt-2 text-slate-800 max-w-2xl mx-auto">La escuela es el lugar ideal para aplicar estos conocimientos. Fomentar el movimiento durante la jornada escolar tiene un impacto positivo comprobado.</p>
                 </div>
                 <div id="school-steps" class="relative"></div>
             </div>
@@ -152,7 +173,7 @@
                     {
                         icon: '🧠',
                         title: 'Plasticidad Cerebral',
-                        description: 'El ejercicio promueve la capacidad del cerebro para formar nuevas conexiones neuronales (sinaptogénesis) y crear nuevas neuronas (neurogénesis), la base del aprendizaje.'
+                        description: 'El ejercicio promueve la capacidad del cerebro para formar nuevas conexiones neuronales (sinaptogénesis) y crear nuevas neuronas (neurogénesis), la base del aprendizaje y memoria.'
                     },
                     {
                         icon: '🩸',
@@ -194,8 +215,8 @@
                     },
                     text: {
                         aerobic: 'El ejercicio aeróbico, como correr o nadar, es excepcionalmente bueno para mejorar la atención sostenida y selectiva, la planificación y la memoria de trabajo.',
-                        strength: 'El entrenamiento de fuerza ha demostrado tener un impacto significativo en la función cognitiva general y el rendimiento académico. Fomenta la disciplina y la perseverancia.',
-                        combined: 'La combinación de ejercicios de fuerza, coordinación y aeróbicos parece ofrecer los beneficios más completos. Este enfoque integral estimula el desarrollo mental en todas las áreas.'
+                        strength: 'El entrenamiento de fuerza ha demostrado tener un impacto significativo en la función cognitiva general y el rendimiento académico. Fomenta la disciplina y la constancia.',
+                        combined: 'La combinación de ejercicios de fuerza, coordinación y aeróbicos parece ofrecer los beneficios más completos. Este enfoque integral estimula el desarrollo multidimensional del cerebro.'
                     }
                 },
                 comparison: {
@@ -267,15 +288,15 @@
                 school: [
                     {
                         title: '1. Inicio Activo del Día',
-                        content: 'Fomentar el desplazamiento activo al colegio (caminar, bicicleta) y realizar actividades físicas de 5-10 minutos antes de la primera clase. Esto mejora la atención desde temprano.'
+                        content: 'Fomentar el desplazamiento activo al colegio (caminar, bicicleta) y realizar actividades físicas de 5-10 minutos antes de la primera clase. Esto mejora la atención y la energía.'
                     },
                     {
                         title: '2. Pausas Activas',
-                        content: 'Integrar descansos de 3-5 minutos cada 45-60 minutos de clase. Ejercicios simples como saltos, estiramientos o bailes restauran la capacidad de atención y mejoran el ánimo.'
+                        content: 'Integrar descansos de 3-5 minutos cada 45-60 minutos de clase. Ejercicios simples como saltos, estiramientos o bailes restauran la capacidad de atención y mejoran el aprendizaje.'
                     },
                     {
                         title: '3. Recreos y Actividades Extraescolares',
-                        content: 'Ofrecer materiales y espacios que inviten al movimiento durante los recreos. Promover clubes deportivos y actividades extraescolares que garanticen la práctica regular.'
+                        content: 'Ofrecer materiales y espacios que inviten al movimiento durante los recreos. Promover clubes deportivos y actividades extraescolares que garanticen la práctica regular de ejercicio.'
                     }
                 ]
             };
@@ -313,15 +334,17 @@
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            bodyFont: { size: 18 }, // MODIFICADO
-                            titleFont: { size: 20 }  // MODIFICADO
+                            bodyFont: { size: window.innerWidth < 600 ? 12 : 18 },
+                            titleFont: { size: window.innerWidth < 600 ? 14 : 20 }
                         }
                     },
                     scales: {
                         r: {
                             angleLines: { display: true },
-                            min: 0, max: 10, ticks: { stepSize: 2, font: { size: 18 } }, // MODIFICADO
-                            pointLabels: { font: { size: 20 } } // MODIFICADO
+                            min: 0,
+                            max: 10,
+                            ticks: { stepSize: 2, font: { size: window.innerWidth < 600 ? 12 : 18 } },
+                            pointLabels: { font: { size: window.innerWidth < 600 ? 13 : 20 } }
                         }
                     }
                 }
@@ -354,15 +377,15 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'top', labels: { font: { size: 18 } } }, // MODIFICADO
+                        legend: { position: 'top', labels: { font: { size: window.innerWidth < 600 ? 12 : 18 } } },
                         tooltip: {
-                            bodyFont: { size: 18 }, // MODIFICADO
-                            titleFont: { size: 20 } // MODIFICADO
+                            bodyFont: { size: window.innerWidth < 600 ? 12 : 18 },
+                            titleFont: { size: window.innerWidth < 600 ? 14 : 20 }
                         }
                     },
                     scales: {
-                        x: { beginAtZero: true, max: 10, ticks: { font: { size: 18 } } }, // MODIFICADO
-                        y: { ticks: { font: { size: 18 } } } // MODIFICADO
+                        x: { beginAtZero: true, max: 10, ticks: { font: { size: window.innerWidth < 600 ? 12 : 18 } } },
+                        y: { ticks: { font: { size: window.innerWidth < 600 ? 12 : 18 } } }
                     }
                 }
             });
