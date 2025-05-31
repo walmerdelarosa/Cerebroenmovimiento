@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio, Cerebro y Academia: La Conexión Interactiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 450px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .tab-active { border-color: #10b981; color: #10b981; }
+        .tab-inactive { border-color: transparent; color: #6b7280; }
+        .card-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .card-active .card-content { max-height: 200px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <h1 class="font-bold text-lg text-emerald-600">Cerebro en Movimiento</h1>
+            <div class="hidden md:flex space-x-6 text-sm font-semibold">
+                <a href="#intro" class="text-slate-600 hover:text-emerald-600 transition">Inicio</a>
+                <a href="#why" class="text-slate-600 hover:text-emerald-600 transition">¿Por Qué?</a>
+                <a href="#benefits" class="text-slate-600 hover:text-emerald-600 transition">Beneficios</a>
+                <a href="#types" class="text-slate-600 hover:text-emerald-600 transition">Tipos de Ejercicio</a>
+                <a href="#recommendations" class="text-slate-600 hover:text-emerald-600 transition">Recomendaciones</a>
+                <a href="#school" class="text-slate-600 hover:text-emerald-600 transition">En la Escuela</a>
+            </div>
+            <div class="md:hidden">
+                <select id="mobile-nav" class="border border-slate-300 rounded-md p-1 text-sm bg-white">
+                    <option value="#intro">Inicio</option>
+                    <option value="#why">¿Por Qué?</option>
+                    <option value="#benefits">Beneficios</option>
+                    <option value="#types">Tipos de Ejercicio</option>
+                    <option value="#recommendations">Recomendaciones</option>
+                    <option value="#school">En la Escuela</option>
+                </select>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="intro" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Mueve tu cuerpo, potencia tu mente.</h2>
+                <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                    Descubre cómo los ejercicios de fuerza y resistencia mejoran las funciones ejecutivas del cerebro, impulsando el rendimiento académico. Esta aplicación interactiva desglosa la ciencia detrás de la conexión entre actividad física y cognición.
+                </p>
+            </div>
+        </section>
+
+        <section id="why" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-slate-800">¿Por Qué Funciona? Los Mecanismos Cerebrales</h3>
+                    <p class="mt-2 text-slate-600 max-w-2xl mx-auto">El ejercicio no solo fortalece los músculos, sino que transforma activamente la química y estructura de tu cerebro. Estos son los mecanismos clave.</p>
+                </div>
+                <div id="mechanism-cards" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-slate-800">Beneficios Directos en tus Funciones Ejecutivas</h3>
+                     <p class="mt-2 text-slate-600 max-w-3xl mx-auto">Las funciones ejecutivas son las habilidades mentales que nos permiten planificar, enfocarnos y realizar múltiples tareas. El ejercicio físico las potencia de manera directa.</p>
+                </div>
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                    <div class="w-full lg:w-1/2">
+                         <div class="chart-container">
+                            <canvas id="benefitsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-1/2">
+                        <div class="flex justify-center space-x-2 mb-4">
+                            <button data-type="aerobic" class="benefit-btn bg-emerald-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-emerald-600 transition">Aeróbico</button>
+                            <button data-type="strength" class="benefit-btn bg-sky-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-sky-600 transition">Fuerza</button>
+                            <button data-type="combined" class="benefit-btn bg-slate-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-slate-600 transition">Combinado</button>
+                        </div>
+                        <div id="benefit-text" class="bg-slate-100 p-6 rounded-lg text-slate-700"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="types" class="py-20">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-slate-800">Comparando Tipos de Ejercicio</h3>
+                    <p class="mt-2 text-slate-600 max-w-3xl mx-auto">Tanto el ejercicio aeróbico como el de fuerza aportan beneficios únicos. Aquí puedes comparar directamente cómo cada modalidad impacta el rendimiento cognitivo y académico.</p>
+                </div>
+                 <div class="bg-white p-8 rounded-xl shadow-md">
+                     <div class="chart-container mx-auto mb-8">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                     <div class="text-center text-sm text-slate-500">
+                        <p>El gráfico muestra una estimación del impacto positivo relativo reportado en la literatura. El entrenamiento de fuerza, por ejemplo, ha demostrado ser particularmente efectivo en el rendimiento académico.</p>
+                    </div>
+                 </div>
+            </div>
+        </section>
+        
+        <section id="recommendations" class="py-20 bg-slate-100">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-slate-800">Recomendaciones Prácticas</h3>
+                    <p class="mt-2 text-slate-600 max-w-2xl mx-auto">¿Cuánto y cómo? Aquí tienes las guías basadas en la evidencia para optimizar los beneficios cognitivos. Selecciona tu grupo de edad:</p>
+                </div>
+                <div>
+                    <div class="flex justify-center border-b-2 border-slate-200 mb-8">
+                        <button id="tab-young-adults" class="tab-btn py-2 px-6 text-lg font-semibold border-b-4 transition tab-active">Jóvenes</button>
+                        <button id="tab-adults" class="tab-btn py-2 px-6 text-lg font-semibold border-b-4 transition tab-inactive">Adultos</button>
+                    </div>
+                    <div id="recommendation-content"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="school" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-slate-800">Integración en el Entorno Escolar</h3>
+                    <p class="mt-2 text-slate-600 max-w-2xl mx-auto">La escuela es el lugar ideal para aplicar estos conocimientos. Fomentar el movimiento durante la jornada escolar tiene un impacto directo en la atención y el aprendizaje.</p>
+                </div>
+                <div id="school-steps" class="relative"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center text-sm">
+            <p>Aplicación interactiva basada en la revisión de evidencia científica sobre ejercicio y función ejecutiva.</p>
+            <p class="mt-2 opacity-70">Diseñado para facilitar la comprensión y aplicación de los hallazgos de la investigación.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = {
+                mechanisms: [
+                    {
+                        icon: '🧠',
+                        title: 'Plasticidad Cerebral',
+                        description: 'El ejercicio promueve la capacidad del cerebro para formar nuevas conexiones neuronales (sinaptogénesis) y crear nuevas neuronas (neurogénesis), la base del aprendizaje y la memoria.'
+                    },
+                    {
+                        icon: '💧',
+                        title: 'Flujo Sanguíneo y Oxigenación',
+                        description: 'Aumenta la irrigación de sangre al cerebro, lo que mejora el suministro de oxígeno y nutrientes, resultando en una mayor activación mental y una función cerebral más eficiente.'
+                    },
+                    {
+                        icon: '🧪',
+                        title: 'Neurotransmisores',
+                        description: 'Estimula la liberación de dopamina, serotonina y noradrenalina, químicos que regulan el estado de ánimo, la motivación y, crucialmente, la atención y el enfoque.'
+                    },
+                    {
+                        icon: '✨',
+                        title: 'Factor BDNF',
+                        description: 'Incrementa la producción del Factor Neurotrófico Derivado del Cerebro (BDNF), una proteína que actúa como "fertilizante" para las neuronas, promoviendo su crecimiento y supervivencia.'
+                    }
+                ],
+                benefits: {
+                    labels: ['Memoria de Trabajo', 'Control Inhibitorio', 'Flexibilidad Cognitiva', 'Atención', 'Planificación', 'Metacognición'],
+                    datasets: {
+                        aerobic: {
+                            label: 'Aeróbico',
+                            data: [7, 8, 7, 9, 8, 6],
+                            borderColor: 'rgba(16, 185, 129, 1)',
+                            backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                        },
+                        strength: {
+                            label: 'Fuerza',
+                            data: [6, 7, 6, 7, 7, 8],
+                            borderColor: 'rgba(14, 165, 233, 1)',
+                            backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                        },
+                        combined: {
+                            label: 'Combinado',
+                            data: [8, 8, 8, 9, 9, 9],
+                            borderColor: 'rgba(100, 116, 139, 1)',
+                            backgroundColor: 'rgba(100, 116, 139, 0.2)',
+                        }
+                    },
+                    text: {
+                        aerobic: 'El ejercicio aeróbico, como correr o nadar, es excepcionalmente bueno para mejorar la atención sostenida y selectiva, la planificación y la memoria de trabajo. Potencia la función ejecutiva global.',
+                        strength: 'El entrenamiento de fuerza ha demostrado tener un impacto significativo en la función cognitiva general y el rendimiento académico. Fomenta la disciplina y la autoestima.',
+                        combined: 'La combinación de ejercicios de fuerza, coordinación y aeróbicos parece ofrecer los beneficios más completos. Este enfoque integral estimula el desarrollo metacognitivo y la planificación avanzada.'
+                    }
+                },
+                comparison: {
+                    labels: ['Función Cognitiva General', 'Rendimiento Académico', 'Comportamiento en Clase'],
+                    datasets: [
+                        {
+                            label: 'Entrenamiento de Resistencia (Fuerza)',
+                            data: [8, 9, 7],
+                            backgroundColor: 'rgba(14, 165, 233, 0.7)',
+                            borderColor: 'rgba(14, 165, 233, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Entrenamiento Aeróbico',
+                            data: [7, 7, 8],
+                            backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                            borderColor: 'rgba(16, 185, 129, 1)',
+                            borderWidth: 1
+                        },
+                         {
+                            label: 'Entrenamiento Concurrente (Mixto)',
+                            data: [6, 6, 7],
+                             backgroundColor: 'rgba(245, 158, 11, 0.7)',
+                            borderColor: 'rgba(245, 158, 11, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                recommendations: {
+                    youngAdults: `
+                        <div class="grid md:grid-cols-3 gap-6 text-center">
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="text-sky-500 text-5xl font-bold mb-2">⚡</div>
+                                <h4 class="font-bold text-lg mb-1">Intensidad</h4>
+                                <p class="text-sm text-slate-600">Moderada a Vigorosa. Deben sentir un aumento notable en la frecuencia cardíaca y respiratoria.</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="text-emerald-500 text-5xl font-bold mb-2">⏰</div>
+                                <h4 class="font-bold text-lg mb-1">Duración/Frecuencia</h4>
+                                <p class="text-sm text-slate-600">Al menos 60 minutos de actividad física diaria. Se recomienda acumular este tiempo en periodos más cortos a lo largo del día.</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="text-amber-500 text-5xl font-bold mb-2">🏋️‍♂️</div>
+                                <h4 class="font-bold text-lg mb-1">Tipo</h4>
+                                <p class="text-sm text-slate-600">Principalmente aeróbico (correr, nadar, deportes de equipo). Incluir actividades de fortalecimiento muscular y óseo al menos 3 veces por semana.</p>
+                            </div>
+                        </div>
+                    `,
+                    adults: `
+                        <div class="grid md:grid-cols-3 gap-6 text-center">
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="text-sky-500 text-5xl font-bold mb-2">⚡</div>
+                                <h4 class="font-bold text-lg mb-1">Intensidad</h4>
+                                <p class="text-sm text-slate-600">Aeróbico: Moderada (caminar rápido) a Vigorosa (correr). Fuerza: Adaptada a la capacidad individual, con sobrecarga progresiva.</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="text-emerald-500 text-5xl font-bold mb-2">⏰</div>
+                                <h4 class="font-bold text-lg mb-1">Duración/Frecuencia</h4>
+                                <p class="text-sm text-slate-600">150-300 min de actividad aeróbica moderada a la semana, O 75-150 min de actividad vigorosa. Complementar con 2 días de entrenamiento de fuerza.</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow">
+                                <div class="text-amber-500 text-5xl font-bold mb-2">🏃‍♀️</div>
+                                <h4 class="font-bold text-lg mb-1">Tipo</h4>
+                                <p class="text-sm text-slate-600">Combinar ejercicios aeróbicos (caminar, ciclismo) con entrenamiento de resistencia que involucre los principales grupos musculares.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                school: [
+                    {
+                        title: '1. Inicio Activo del Día',
+                        content: 'Fomentar el desplazamiento activo al colegio (caminar, bicicleta) y realizar actividades físicas de 5-10 minutos antes de la primera clase. Esto mejora la atención y prepara al cerebro para el aprendizaje.'
+                    },
+                    {
+                        title: '2. Pausas Activas',
+                        content: 'Integrar descansos de 3-5 minutos cada 45-60 minutos de clase. Ejercicios simples como saltos, estiramientos o bailes restauran la capacidad de atención y mejoran el ánimo.'
+                    },
+                    {
+                        title: '3. Educación Física de Calidad',
+                        content: 'Asegurar clases de Educación Física impartidas por especialistas, enfocadas en el desarrollo de la aptitud cardiorrespiratoria y muscular, y que incluyan desafíos cognitivos.'
+                    },
+                    {
+                        title: '4. Recreos y Actividades Extraescolares',
+                        content: 'Ofrecer materiales y espacios que inviten al movimiento durante los recreos. Promover clubes deportivos y actividades extraescolares que garanticen la práctica regular.'
+                    }
+                ]
+            };
+
+            // Mecanismos (desplegables)
+            const mechanismContainer = document.getElementById('mechanism-cards');
+            data.mechanisms.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-lg shadow-md cursor-pointer transform hover:-translate-y-1 transition';
+                card.innerHTML = `
+                    <div class="flex items-center mb-3">
+                        <span class="text-3xl mr-4">${m.icon}</span>
+                        <h4 class="font-bold text-lg">${m.title}</h4>
+                    </div>
+                    <p class="text-sm text-slate-600 card-content">${m.description}</p>
+                `;
+                mechanismContainer.appendChild(card);
+                card.addEventListener('click', () => {
+                    card.classList.toggle('card-active');
+                });
+            });
+
+            // Gráfica de Beneficios
+            const benefitsChartCtx = document.getElementById('benefitsChart').getContext('2d');
+            let currentBenefitType = 'aerobic';
+            let benefitsChart = new Chart(benefitsChartCtx, {
+                type: 'radar',
+                data: {
+                    labels: data.benefits.labels,
+                    datasets: [data.benefits.datasets['aerobic']]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        r: {
+                            angleLines: { display: true },
+                            min: 0, max: 10, ticks: { stepSize: 2 }
+                        }
+                    }
+                }
+            });
+
+            // Botones para cambiar la gráfica de beneficios
+            document.querySelectorAll('.benefit-btn').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    const type = btn.getAttribute('data-type');
+                    currentBenefitType = type;
+                    benefitsChart.data.datasets = [data.benefits.datasets[type]];
+                    benefitsChart.update();
+                    document.getElementById('benefit-text').innerHTML = data.benefits.text[type];
+                    document.querySelectorAll('.benefit-btn').forEach(b => b.classList.remove('ring', 'ring-2','ring-emerald-400'));
+                    btn.classList.add('ring', 'ring-2','ring-emerald-400');
+                });
+            });
+            document.getElementById('benefit-text').innerHTML = data.benefits.text['aerobic'];
+
+            // Gráfica de comparación
+            const comparisonChartCtx = document.getElementById('comparisonChart').getContext('2d');
+            new Chart(comparisonChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: data.comparison.labels,
+                    datasets: data.comparison.datasets
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'top' } },
+                    scales: {
+                        y: { beginAtZero: true, max: 10 }
+                    }
+                }
+            });
+
+            // Tabs de recomendaciones
+            function showRecommendation(type) {
+                document.getElementById('recommendation-content').innerHTML = data.recommendations[type];
+                document.getElementById('tab-young-adults').classList.toggle('tab-active', type === 'youngAdults');
+                document.getElementById('tab-young-adults').classList.toggle('tab-inactive', type !== 'youngAdults');
+                document.getElementById('tab-adults').classList.toggle('tab-active', type === 'adults');
+                document.getElementById('tab-adults').classList.toggle('tab-inactive', type !== 'adults');
+            }
+            document.getElementById('tab-young-adults').addEventListener('click', () => showRecommendation('youngAdults'));
+            document.getElementById('tab-adults').addEventListener('click', () => showRecommendation('adults'));
+            showRecommendation('youngAdults');
+
+            // Pasos escolares
+            const schoolSteps = document.getElementById('school-steps');
+            data.school.forEach(step => {
+                const div = document.createElement('div');
+                div.className = 'mb-6 bg-slate-100 p-6 rounded-lg shadow';
+                div.innerHTML = `<h4 class="font-bold mb-2">${step.title}</h4><p>${step.content}</p>`;
+                schoolSteps.appendChild(div);
+            });
+
+            // Navegación móvil
+            document.getElementById('mobile-nav').addEventListener('change', function() {
+                window.location.hash = this.value;
+            });
+        });
+    </script>
+</body>
+</html>
